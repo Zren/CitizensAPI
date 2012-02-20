@@ -16,16 +16,20 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class YamlStorage implements Storage {
     private final FileConfiguration config;
     private final File file;
-
-    public YamlStorage(String fileName, String header) {
+    
+    public YamlStorage(File file, String header) {
         config = new YamlConfiguration();
-        file = new File(fileName);
+        this.file = file;
         if (!file.exists()) {
             create();
             config.options().header(header);
             save();
         } else
             load();
+    }
+    
+    public YamlStorage(String fileName, String header) {
+        this(new File(fileName), header);
     }
 
     private void create() {
